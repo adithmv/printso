@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
 import { AuthProvider, useAuth } from "./context/AuthContext"
 
+import Landing from "./pages/Landing"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import OwnerLogin from "./pages/OwnerLogin"
@@ -15,7 +16,7 @@ import OrderDetail from "./pages/owner/OrderDetail"
 
 const ProtectedStudent = ({ children }) => {
   const { user, profile, loading } = useAuth()
-  if (loading) return <div className="flex items-center justify-center h-screen text-brand-600 text-xl">Loading...</div>
+  if (loading) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: "#6366f1", fontSize: 18 }}>Loading...</div>
   if (!user) return <Navigate to="/login" />
   if (profile?.role === "owner") return <Navigate to="/owner/dashboard" />
   return children
@@ -23,7 +24,7 @@ const ProtectedStudent = ({ children }) => {
 
 const ProtectedOwner = ({ children }) => {
   const { user, profile, loading } = useAuth()
-  if (loading) return <div className="flex items-center justify-center h-screen text-brand-600 text-xl">Loading...</div>
+  if (loading) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: "#6366f1", fontSize: 18 }}>Loading...</div>
   if (!user) return <Navigate to="/owner-login" />
   if (profile?.role === "student") return <Navigate to="/dashboard" />
   return children
@@ -32,10 +33,13 @@ const ProtectedOwner = ({ children }) => {
 const AppRoutes = () => {
   const { user, profile, loading } = useAuth()
 
-  if (loading) return <div className="flex items-center justify-center h-screen text-brand-600 text-xl">Loading...</div>
+  if (loading) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: "#6366f1", fontSize: 18 }}>Loading...</div>
 
   return (
     <Routes>
+      {/* Landing */}
+      <Route path="/" element={<Landing />} />
+
       {/* Public Routes */}
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
@@ -52,7 +56,7 @@ const AppRoutes = () => {
 
       {/* Default redirect */}
       <Route path="*" element={
-        !user ? <Navigate to="/login" /> :
+        !user ? <Navigate to="/" /> :
         profile?.role === "owner" ? <Navigate to="/owner/dashboard" /> :
         <Navigate to="/dashboard" />
       } />

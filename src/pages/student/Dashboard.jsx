@@ -14,7 +14,7 @@ const statusConfig = {
 }
 
 export default function StudentDashboard() {
-  const { profile, signOut } = useAuth()
+  const { user, profile, signOut } = useAuth()
   const navigate = useNavigate()
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
@@ -28,10 +28,11 @@ export default function StudentDashboard() {
     return () => supabase.removeChannel(subscription)
   }, [])
 
-  const fetchOrders = async () => {
+const fetchOrders = async () => {
     const { data, error } = await supabase
       .from("orders")
       .select("*")
+      .eq("user_id", user.id)
       .order("created_at", { ascending: false })
     if (!error) setOrders(data)
     setLoading(false)
@@ -112,7 +113,7 @@ export default function StudentDashboard() {
             <p className="text-sm font-medium text-gray-700 mt-0.5">{profile?.batch}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-400 uppercase tracking-wide">Study Time</p>
+            <p className="text-xs text-gray-400 uppercase tracking-wide"></p>
             <p className="text-sm font-medium text-gray-700 mt-0.5">{profile?.study_time}</p>
           </div>
         </div>

@@ -12,7 +12,7 @@ const SLOTS = ["11:00 AM - 11:10 AM", "1:15 PM - 2:00 PM", "3:00 PM - 3:10 PM"]
 
 const PRICES = {
   bw:    { single: 4, double: 6 },
-  color: { single: 10, double: 14 },
+  color: { single: 10, double: 20 },
 }
 
 function calcPrice(printType, sides, pages, copies) {
